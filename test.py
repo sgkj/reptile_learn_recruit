@@ -8,7 +8,6 @@ reload(sys)
 sys.setdefaultencoding('UTF-8')
 #糗事百科爬虫类
 class QSBK:
-#初始化方法，定义一些变量
    #初始化方法，定义一些变量
     def __init__(self):
         self.pageIndex = 1
@@ -20,15 +19,15 @@ class QSBK:
         #存放程序是否继续运行的变量
         self.enable = False
 
-#传入某一页的索引获得页面
+    #传入某一页的索引获得页面
     def getPage(self, pageIndex):
         try:
             url = 'http://www.qiushibaike.com/hot/' + str(pageIndex)
-    #构建请求的request
+            #构建请求的request
             request = urllib2.Request(url,headers = self.headers)
-    #利用urlopen获取页面代码
+            #利用urlopen获取页面代码
             response = urllib2.urlopen(request)
-    #将页面转化为utf-8编码
+            #将页面转化为utf-8编码
             content = response.read().decode('utf-8')
             return content
         except urllib2.URLError, e:
@@ -56,7 +55,6 @@ class QSBK:
             pageStories.append([item[0].strip(),item[1].strip(),item[2].strip(),])
         return pageStories
     #加载并提取页面的内容，加入到列表中
-#加载并提取页面的内容，加入到列表中
     def loadPage(self):
         #如果当前未看的页数少于2页，则加载新一页
         if self.enable == True:
@@ -68,7 +66,7 @@ class QSBK:
                     self.stories.append(pageStories)
                     #获取完之后页码索引加一，表示下次读取下一页
                     self.pageIndex += 1
-#输出该页的段子
+    #输出该页的段子
     def getOneStory(self,pageStories,page):
             #遍历一页的段子
             for story in pageStories:
@@ -81,7 +79,7 @@ class QSBK:
                     self.enable = False
                     return
                 print u"第%d页\t发布人:%s\t发布内容:%s\t赞:%s\n" %(page,story[0],story[1],story[2])
-      #开始方法
+    #开始方法
     def start(self):
             print u"正在读取糗事百科,按回车查看新段子，Q退出"
             #使变量为True，程序可以正常运行
